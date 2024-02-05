@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  padding: 30pt;
+  box-sizing: border-box;
+  background-color: lightblue;
+}
+
+header h1 {
+  margin: 0;
+  color: crimson;
+}
+
+nav {
+  padding: 5pt 50pt;
+  box-sizing: border-box;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  gap: 10pt;
+  align-items: center;
+  list-style: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-size: 20pt;
+}
+
+main {
+  padding: 10pt 60pt;
+  box-sizing: border-box;
+}
+
+.accordion {
+  border-radius: 5pt;
+  border: 1pt solid black;
+  margin: 10pt 0;
+  padding: 5pt;
+  box-sizing: border-box;
+}
+
+.accordion-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5pt;
+}
+
+.accordion-header img {
+  position: relative;
+  top: 1pt;
+  width: 15pt;
+  height: 15pt;
+}
