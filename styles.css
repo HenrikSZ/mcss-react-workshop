@@ -59,3 +59,11 @@ main {
   width: 15pt;
   height: 15pt;
 }
+
+#course-addition {
+  display: flex;
+  flex-direction: column;
+  gap: 10pt;
+  margin: 10pt 0;
+  width: 300px;
+}
