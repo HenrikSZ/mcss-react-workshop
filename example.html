@@ -9,52 +9,8 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <header>
-      <h1>MCSS React Workshop</h1>
-    </header>
-    <nav>
-      <ul>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Clubs</a></li>
-        <li><a href="#">People</a></li>
-      </ul>
-    </nav>
-    <main>
-      <h2>Courses</h2>
-      <div id="courses-root"></div>
-      <h2>Add a course</h2>
-      <form id="course-addition">
-        <label for="course">Name</label>
-        <input type="text" id="course" name="course">
-        <label for="description">Description</label>
-        <textarea id="description" name="description"></textarea>
-        <input type="submit" value="Submit">
-      </form>
-      <h2>Clubs</h2>
-      <div class="club-container">
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/CSSC.png.webp?itok=yB4NBAuR">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/MCSS.png.webp?itok=V_V7ou1F">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTMSAM.png.webp?itok=UbzrFKCM">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTM%20Robotiocs.png.webp?itok=zAekJkWy">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/wISC.png.webp?itok=fCnaicso">
-        </a>
-      </div>
-      <h2>People</h2>
-      <ul>
-        <li>Michael Liut</li>
-        <li>Arnold Rosenbloom</li>
-        <li>Andi Bergen</li>
-      </ul>
-    </main>
+    <div id="root">
+    </div>
     <script type="text/babel">
       function Accordion({ header, children }) {
         const [open, setOpen] = React.useState(false);
@@ -73,6 +29,7 @@
       function Courses() {
         return (
           <div>
+            <h2>Courses</h2>
             <Accordion header="CSC148H5">
               <p>Prerequisites: CSC108H5</p>
               <p>
@@ -109,11 +66,83 @@
                 problems using formal models.
               </p>
             </Accordion>
+            <h2>Add a course</h2>
+              <form id="course-addition">
+                <label for="course">Name</label>
+                <input type="text" id="course" name="course" />
+                <label for="description">Description</label>
+                <textarea id="description" name="description"></textarea>
+                <input type="submit" value="Submit" />
+              </form>
           </div>
         );
       }
 
-      ReactDOM.render(<Courses />, document.getElementById('courses-root'));
+      function Clubs() {
+        return (
+          <div>
+            <h2>Clubs</h2>
+            <div class="club-container">
+                <a class="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/CSSC.png.webp?itok=yB4NBAuR" />
+              </a>
+              <a class="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/MCSS.png.webp?itok=V_V7ou1F" />
+              </a>
+              <a class="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTMSAM.png.webp?itok=UbzrFKCM" />
+              </a>
+              <a class="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTM%20Robotiocs.png.webp?itok=zAekJkWy" />
+              </a>
+              <a class="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/wISC.png.webp?itok=fCnaicso" />
+              </a>
+            </div>
+          </div>
+        );
+      }
+
+      function People() {
+        return (
+          <div>
+            <h2>People</h2>
+            <ul>
+              <li>Michael Liut</li>
+              <li>Arnold Rosenbloom</li>
+              <li>Andi Bergen</li>
+            </ul>
+          </div>
+        );
+      }
+
+      function Website() {
+        const [subpage, setSubpage] = React.useState('courses');
+
+        return (
+          <div>
+            <header>
+              <h1>MCSS React Workshop</h1>
+            </header>
+            <nav>
+              <ul>
+                <li><a onClick={() => setSubpage('courses')}>Courses</a></li>
+                <li><a onClick={() => setSubpage('clubs')}>Clubs</a></li>
+                <li><a onClick={() => setSubpage('people')}>People</a></li>
+              </ul>
+            </nav>
+            <main>
+              {
+                subpage === 'courses' ? <Courses /> :
+                  subpage === 'clubs' ? <Clubs /> :
+                    <People />
+              }
+            </main>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<Website />, document.getElementById('root'));
     </script>
     <style>
       body {
@@ -148,6 +177,7 @@
       nav ul li a {
         text-decoration: none;
         color: black;
+        cursor: pointer;
         font-size: 20pt;
       }
 
