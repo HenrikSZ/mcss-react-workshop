@@ -16,8 +16,8 @@
         const [open, setOpen] = React.useState(false);
 
         return (
-          <div class="accordion">
-            <div class="accordion-header" onClick={() => setOpen(!open)}>
+          <div className="accordion">
+            <div className="accordion-header" onClick={() => setOpen(!open)}>
               <div>{open ? "🞁" : "🞃"}</div>
               <h3>{header}</h3>
             </div>
@@ -26,54 +26,42 @@
         );
       }
 
+      function CourseAddForm({ onCourseAdd }) {
+        const [name, setName] = React.useState('');
+        const [description, setDescription] = React.useState('');
+
+        return (
+          <div>
+            <h2>Add a course</h2>
+            <form id="course-addition" onSubmit={e => e.preventDefault()}>
+              <label htmlFor="course">Name</label>
+              <input type="text" id="course" name="course"
+                onChange={e => setName(e.target.value)} />
+              <label htmlFor="description">Description</label>
+              <textarea id="description" name="description"
+                onChange={e => setDescription(e.target.value)}></textarea>
+              <input type="submit" value="Submit"
+                onClick={() => onCourseAdd(name, description)} />
+            </form>
+          </div>
+        );
+      }
+
       function Courses() {
+        const [courses, setCourses] = React.useState(() =>
+          JSON.parse(document.getElementById('hidden-content').textContent).courses);
+
         return (
           <div>
             <h2>Courses</h2>
-            <Accordion header="CSC148H5">
-              <p>Prerequisites: CSC108H5</p>
-              <p>
-                This course introduces students to the principles of computer
-                programming and to the basic techniques for writing programs using a
-                high-level programming language. It also introduces students to the
-                design and analysis of algorithms, the structure of computer systems,
-                and the nature of computer science.
-              </p>
-            </Accordion>
-            <Accordion header="CSC207H5">
-              <p>
-                CSC207H5 is a course that focuses on software development and introduces students to
-                Java and the Software Development Life Cycle (SDLC). In this course, students will
-                learn the fundamentals of Java programming, including object-oriented programming
-                concepts and techniques. They will also gain an understanding of the SDLC, which
-                encompasses the processes and methodologies used in developing software applications.
-                Through hands-on projects and assignments, students will have the opportunity to apply
-                their knowledge and develop real-world software solutions. By the end of the course,
-                students will have a solid foundation in Java programming and a comprehensive understanding
-                of the software development process.
-              </p>
-            </Accordion>
-            <Accordion header="CSC236H5">
-              <p>Prerequisites: CSC148H5</p>
-              <p>
-                CSC236H5 is an introduction to the theory of computation. This course covers topics such as
-                proving program correctness, runtime analysis, and finite automata. Students will learn
-                about the theoretical foundations of computation and gain the skills to analyze and design
-                algorithms. Through lectures, assignments, and projects, students will develop a deep
-                understanding of the principles and techniques used in the theory of computation. By the end
-                of the course, students will be equipped with the knowledge and tools to reason about the
-                correctness and efficiency of programs, as well as to recognize and solve computational
-                problems using formal models.
-              </p>
-            </Accordion>
-            <h2>Add a course</h2>
-              <form id="course-addition">
-                <label for="course">Name</label>
-                <input type="text" id="course" name="course" />
-                <label for="description">Description</label>
-                <textarea id="description" name="description"></textarea>
-                <input type="submit" value="Submit" />
-              </form>
+            {Object.keys(courses).map((course, i) => (
+              <Accordion key={i} header={course}>
+                <p>{courses[course].description}</p>
+                <p>Prerequisites: {courses[course].prerequisites.join(', ')}</p>
+              </Accordion>
+            ))}
+            <CourseAddForm onCourseAdd={(name, description) =>
+              setCourses({[name]: { description, prerequisites: [] }, ...courses})} />
           </div>
         );
       }
@@ -82,20 +70,20 @@
         return (
           <div>
             <h2>Clubs</h2>
-            <div class="club-container">
-                <a class="club" href="#">
+            <div className="club-container">
+                <a className="club" href="#">
                 <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/CSSC.png.webp?itok=yB4NBAuR" />
               </a>
-              <a class="club" href="#">
+              <a className="club" href="#">
                 <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/MCSS.png.webp?itok=V_V7ou1F" />
               </a>
-              <a class="club" href="#">
+              <a className="club" href="#">
                 <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTMSAM.png.webp?itok=UbzrFKCM" />
               </a>
-              <a class="club" href="#">
+              <a className="club" href="#">
                 <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTM%20Robotiocs.png.webp?itok=zAekJkWy" />
               </a>
-              <a class="club" href="#">
+              <a className="club" href="#">
                 <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/wISC.png.webp?itok=fCnaicso" />
               </a>
             </div>
@@ -142,7 +130,8 @@
         );
       }
 
-      ReactDOM.render(<Website />, document.getElementById('root'));
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<Website />, );
     </script>
     <style>
       body {
@@ -249,5 +238,23 @@
         max-height: 200px;
       }
     </style>
+    <div style="visibility: hidden;" id="hidden-content">
+      {
+        "courses": {
+          "CSC108H5": {
+            "description": "This course introduces students to the principles of computer programming and to the basic techniques for writing programs using a high-level programming language. It also introduces students to the design and analysis of algorithms, the structure of computer systems, and the nature of computer science.",
+            "prerequisites": []
+          },
+          "CSC148H5": {
+            "description": "This course introduces students to the principles of computer programming and to the basic techniques for writing programs using a high-level programming language. It also introduces students to the design and analysis of algorithms, the structure of computer systems, and the nature of computer science.",
+            "prerequisites": ["CSC108H5"]
+          },
+          "CSC207H5": {
+            "description": "CSC207H5 is a course that focuses on software development and introduces students to Java and the Software Development Life Cycle (SDLC). In this course, students will learn the fundamentals of Java programming, including object-oriented programming concepts and techniques. They will also gain an understanding of the SDLC, which encompasses the processes and methodologies used in developing software applications. Through hands-on projects and assignments, students will have the opportunity to apply their knowledge and develop real-world software solutions. By the end of the course, students will have a solid foundation in Java programming and a comprehensive understanding of the software development process.",
+            "prerequisites": ["CSC148H5"]
+          }
+        }
+      }
+    </div>
   </body>
 </html>
