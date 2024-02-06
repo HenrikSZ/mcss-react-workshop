@@ -7,7 +7,6 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
@@ -24,7 +23,9 @@
       <h2>Courses</h2>
       <div class="accordion">
         <div class="accordion-header">
-          <img src="chevron.png">
+          <div>
+            &#128899;
+          </div>
           <h3>CSC108H5</h3>
         </div>
         <div>
@@ -39,7 +40,9 @@
       </div>
       <div class="accordion">
         <div class="accordion-header">
-          <img src="chevron.png">
+          <div>
+            &#128899;
+          </div>
           <h3>CSC148H5</h3>
         </div>
         <div>
@@ -55,7 +58,9 @@
       </div>
       <div class="accordion">
         <div class="accordion-header">
-          <img src="chevron.png">
+          <div>
+            &#128899;
+          </div>
           <h3>CSC207H5</h3>
         </div>
         <div>
@@ -74,7 +79,9 @@
       </div>
       <div class="accordion">
         <div class="accordion-header">
-          <img src="chevron.png">
+          <div>
+            &#128899;
+          </div>
           <h3>CSC236H5</h3>
         </div>
         <div>
@@ -124,5 +131,108 @@
         <li>Andi Bergen</li>
       </ul>
     </main>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      header {
+        width: 100%;
+        padding: 30pt;
+        box-sizing: border-box;
+        background-color: lightblue;
+      }
+
+      header h1 {
+        margin: 0;
+        color: crimson;
+      }
+
+      nav {
+        padding: 5pt 50pt;
+        box-sizing: border-box;
+      }
+
+      nav ul {
+        display: flex;
+        flex-direction: row;
+        gap: 10pt;
+        align-items: center;
+        list-style: none;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: black;
+        font-size: 20pt;
+      }
+
+      main {
+        padding: 0pt 60pt 50pt 60pt;
+        box-sizing: border-box;
+      }
+
+      .accordion {
+        border-radius: 5pt;
+        border: 1pt solid black;
+        margin: 10pt 0;
+        padding: 5pt;
+        box-sizing: border-box;
+      }
+
+      .accordion-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5pt;
+      }
+
+      .accordion-header div {
+        position: relative;
+        font-weight: 900;
+        font-size: 20pt;
+        top: -10pt;
+        width: 15pt;
+        height: 15pt;
+      }
+
+      #course-addition {
+        display: flex;
+        flex-direction: column;
+        gap: 10pt;
+        margin: 10pt 0;
+        width: 300px;
+      }
+
+      .club-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10pt;
+      }
+
+      .club {
+        position: relative;
+        top: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 220px;
+        height: 220px;
+        overflow: hidden;
+        border-radius: 5pt;
+        border: 2pt solid gray;
+        transition: 200ms;
+      }
+
+      .club:hover {
+        top: -5px;
+        box-shadow: 2px 8px 2px orange;
+      }
+
+      .club img {
+        max-width: 200px;
+        max-height: 200px;
+      }
+    </style>
   </body>
 </html>
