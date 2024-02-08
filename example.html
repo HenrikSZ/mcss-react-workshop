@@ -9,128 +9,118 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <header>
-      <h1>MCSS React Workshop</h1>
-    </header>
-    <nav>
-      <ul>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Clubs</a></li>
-        <li><a href="#">People</a></li>
-      </ul>
-    </nav>
-    <main>
-      <h2>Courses</h2>
-      <div class="accordion">
-        <div class="accordion-header">
-          <div>
-            &#128899;
+    <div id="root">
+    </div>
+    <script type="text/babel">
+      function Accordion({ header, children }) {
+        return (
+          <div className="accordion">
+            <div className="accordion-header">
+              <div>🞃</div>
+              <h3>{header}</h3>
+            </div>
+            <div>{children}</div>
           </div>
-          <h3>CSC108H5</h3>
-        </div>
-        <div>
-          <p>
-            This course introduces students to the principles of computer
-            programming and to the basic techniques for writing programs using a
-            high-level programming language. It also introduces students to the
-            design and analysis of algorithms, the structure of computer systems,
-            and the nature of computer science.
-          </p>
-        </div>
-      </div>
-      <div class="accordion">
-        <div class="accordion-header">
+        );
+      }
+
+      function CourseAddForm() {
+        return (
           <div>
-            &#128899;
+            <h2>Add a course</h2>
+            <form id="course-addition" onSubmit={e => e.preventDefault()}>
+              <label htmlFor="course">Name</label>
+              <input type="text" id="course" name="course" />
+              <label htmlFor="description">Description</label>
+              <textarea id="description" name="description"></textarea>
+              <input type="submit" value="Submit" />
+            </form>
           </div>
-          <h3>CSC148H5</h3>
-        </div>
-        <div>
-          <p>Prerequisites: CSC108H5</p>
-          <p>
-            This course introduces students to the principles of computer
-            programming and to the basic techniques for writing programs using a
-            high-level programming language. It also introduces students to the
-            design and analysis of algorithms, the structure of computer systems,
-            and the nature of computer science.
-          </p>
-        </div>
-      </div>
-      <div class="accordion">
-        <div class="accordion-header">
+        );
+      }
+
+      function Courses() {
+        const [courses, setCourses] = React.useState(() =>
+          JSON.parse(document.getElementById('hidden-content').textContent).courses);
+
+        return (
           <div>
-            &#128899;
+            <h2>Courses</h2>
+            {Object.keys(courses).map((course, i) => (
+              <Accordion key={i} header={course}>
+                <p>{courses[course].description}</p>
+                <p>Prerequisites: {courses[course].prerequisites.join(', ')}</p>
+              </Accordion>
+            ))}
+            <CourseAddForm onCourseAdd={(name, description) =>
+              setCourses({[name]: { description, prerequisites: [] }, ...courses})} />
           </div>
-          <h3>CSC207H5</h3>
-        </div>
-        <div>
-          <p>
-            CSC207H5 is a course that focuses on software development and introduces students to
-            Java and the Software Development Life Cycle (SDLC). In this course, students will
-            learn the fundamentals of Java programming, including object-oriented programming
-            concepts and techniques. They will also gain an understanding of the SDLC, which
-            encompasses the processes and methodologies used in developing software applications.
-            Through hands-on projects and assignments, students will have the opportunity to apply
-            their knowledge and develop real-world software solutions. By the end of the course,
-            students will have a solid foundation in Java programming and a comprehensive understanding
-            of the software development process.
-          </p>
-        </div>
-      </div>
-      <div class="accordion">
-        <div class="accordion-header">
+        );
+      }
+
+      function Clubs() {
+        return (
           <div>
-            &#128899;
+            <h2>Clubs</h2>
+            <div className="club-container">
+                <a className="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/CSSC.png.webp?itok=yB4NBAuR" />
+              </a>
+              <a className="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/MCSS.png.webp?itok=V_V7ou1F" />
+              </a>
+              <a className="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTMSAM.png.webp?itok=UbzrFKCM" />
+              </a>
+              <a className="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTM%20Robotiocs.png.webp?itok=zAekJkWy" />
+              </a>
+              <a className="club" href="#">
+                <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/wISC.png.webp?itok=fCnaicso" />
+              </a>
+            </div>
           </div>
-          <h3>CSC236H5</h3>
-        </div>
-        <div>
-          <p>Prerequisites: CSC148H5</p>
-          <p>
-            CSC236H5 is an introduction to the theory of computation. This course covers topics such as
-            proving program correctness, runtime analysis, and finite automata. Students will learn
-            about the theoretical foundations of computation and gain the skills to analyze and design
-            algorithms. Through lectures, assignments, and projects, students will develop a deep
-            understanding of the principles and techniques used in the theory of computation. By the end
-            of the course, students will be equipped with the knowledge and tools to reason about the
-            correctness and efficiency of programs, as well as to recognize and solve computational
-            problems using formal models.
-          </p>
-        </div>
-      </div>
-      <h2>Add a course</h2>
-      <form id="course-addition">
-        <label for="course">Name</label>
-        <input type="text" id="course" name="course">
-        <label for="description">Description</label>
-        <textarea id="description" name="description"></textarea>
-        <input type="submit" value="Submit">
-      </form>
-      <h2>Clubs</h2>
-      <div class="club-container">
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/CSSC.png.webp?itok=yB4NBAuR">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/MCSS.png.webp?itok=V_V7ou1F">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTMSAM.png.webp?itok=UbzrFKCM">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/UTM%20Robotiocs.png.webp?itok=zAekJkWy">
-        </a>
-        <a class="club" href="#">
-          <img src="https://www.utm.utoronto.ca/math-cs-stats/sites/files/math-cs-stats/styles/full_width_xl/public/shared/wISC.png.webp?itok=fCnaicso">
-        </a>
-      </div>
-      <h2>People</h2>
-      <ul>
-        <li>Michael Liut</li>
-        <li>Arnold Rosenbloom</li>
-        <li>Andi Bergen</li>
-      </ul>
-    </main>
+        );
+      }
+
+      function People() {
+        return (
+          <div>
+            <h2>People</h2>
+            <ul>
+              <li>Michael Liut</li>
+              <li>Arnold Rosenbloom</li>
+              <li>Andi Bergen</li>
+            </ul>
+          </div>
+        );
+      }
+
+      function Website() {
+        return (
+          <div>
+            <header>
+              <h1>MCSS React Workshop</h1>
+            </header>
+            <nav>
+              <ul>
+                <li><a>Courses</a></li>
+                <li><a>Clubs</a></li>
+                <li><a>People</a></li>
+              </ul>
+            </nav>
+            <main>
+              <Courses />
+              <Clubs />
+              <People />
+            </main>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<Website />);
+    </script>
     <style>
       body {
         margin: 0;
@@ -164,6 +154,7 @@
       nav ul li a {
         text-decoration: none;
         color: black;
+        cursor: pointer;
         font-size: 20pt;
       }
 
@@ -184,6 +175,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        cursor: pointer;
         gap: 5pt;
       }
 
